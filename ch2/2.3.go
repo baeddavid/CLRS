@@ -1,3 +1,5 @@
+package ch2
+
 /*
 2.3 - 1
 Illustrate the operation of merge sort on the array:
@@ -36,13 +38,13 @@ L: {3, 9, 26, 38, 41, 49, 52, 57} R:{}
 2.3 - 2
 Rewrite the merge sort so it does not use sentinels.
 
-Instead of removing elements until we hit the sentinel card, we can 
+Instead of removing elements until we hit the sentinel card, we can
 remove  elements until the array is empty.
 */
 
 /*
 2.3 - 3
-Because it is a mathematical proof answer is omitted. 
+Because it is a mathematical proof answer is omitted.
 */
 
 /*
@@ -59,19 +61,17 @@ T(n):
 Write psuedocode for binary search. Argue that the worst case run time is O(log n)
 */
 
-using namespace std;
-int binarySearch(int arr[], int left, int right, int key) {
-    if(right >= left) {
+func binarySearch(A []int, left int, right int, v int) int {
+	m := (left + right) / 2
+	if A[m] == v {
+		return m
+	}
 
-        int middle = (left + right) / 2;
-
-        if(arr[middle] == key) return middle;
-
-        else if(arr[middle] > key) return binarySearch(arr, left, middle - 1, key);
-
-        else return binarySearch(arr, middle + 1, right, key);
-    }
-    return 0;
+	if A[m] > v {
+		return binarySearch(A, left, m-1, v)
+	} else {
+		return binarySearch(A, m+1, right, v)
+	}
 }
 
 /*
@@ -84,7 +84,7 @@ every recursive iteration.
 Can we use binary search to improve the performance of insertion sort?
 
 No we cannot. We are not simply performing a linear scan on the previous elements, we are also moving them forward which is a O(n) operation.
-Since we drop non-dominating terms, we drop the O(log n) since O(n) dominates it. This means that the time complexity has not improved. Also it 
+Since we drop non-dominating terms, we drop the O(log n) since O(n) dominates it. This means that the time complexity has not improved. Also it
 should be noted that using binary search in lieu of linear search would also make the code much more complicated to read.
 */
 
@@ -113,7 +113,7 @@ Since we are performing a binary search inside a linear scan our time complexity
 
 bool isMatch(vecotr<int>& S, int x) {
     sort(S, S.size());
-    
+
     for(int i = 0; i < S.size(); i++) {
         int complement = x - S[i];
         if(binarySearch(S, i, S.size(), complement)) return true;
